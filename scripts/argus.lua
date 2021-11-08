@@ -264,7 +264,7 @@ core_projects = {
 
 		end, -- _create_projects()
 	},
-	["example"] = {
+	["example-actions"] = {
 		_add_includedirs = function() end,
 		_add_defines = function() end,
 		_add_libdirs = function() end,
@@ -272,7 +272,7 @@ core_projects = {
 		_add_self_links = function() end,
 		_create_projects = function()
 			group "examples"
-			project "example"
+			project "example-actions"
 				language "C"
 				kind "ConsoleApp"
 				flags {
@@ -295,7 +295,7 @@ core_projects = {
 				}
 
 				files {
-					'../examples/example.c',
+					'../examples/example_actions.c',
 				}
 
 				configuration {}
