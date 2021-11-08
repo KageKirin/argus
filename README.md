@@ -4,8 +4,8 @@ Simple and low-overhead program argument parser in C.
 
 ## Usage example for simple options
 
-Please refer to the `examples/example_options.c` for the full program,
-but the gist is as follows:
+Please refer to the [`examples/example_options.c`](https://github.com/KageKirin/argus/blob/main/examples/example_options.c)
+for the full program, but the gist is as follows:
 
 1. Define an array of `argus_Option` like this:
 
@@ -56,8 +56,8 @@ In the basic case, it's `sscanf` for integers/floats, and just a pointer set for
 Many command line programs combine multiple actions in a single tool (e.g. git with verbs being `init` or `add`),
 with each action having its own set of options.
 
-Please refer to the `examples/example_actions.c` for the full program,
-but the gist is as follows:
+Please refer to the [`examples/example_actions.c`](https://github.com/KageKirin/argus/blob/main/examples/example_actions.c)
+for the full program, but the gist is as follows:
 
 1. Define an array of `argus_Action` pointing to a function to execute.
 
