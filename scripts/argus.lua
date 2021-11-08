@@ -264,6 +264,70 @@ core_projects = {
 
 		end, -- _create_projects()
 	},
+	["example-options"] = {
+		_add_includedirs = function() end,
+		_add_defines = function() end,
+		_add_libdirs = function() end,
+		_add_external_links = function() end,
+		_add_self_links = function() end,
+		_create_projects = function()
+			group "examples"
+			project "example-options"
+				language "C"
+				kind "ConsoleApp"
+				flags {
+					"ExtraWarnings",
+					"FatalWarnings",
+					"No64BitChecks",
+					"StaticRuntime",
+					"ObjcARC",
+				}
+
+				build_c99()
+
+				links {
+					"argus",
+				}
+
+				includedirs {
+					"../src",
+					"../examples",
+				}
+
+				files {
+					'../examples/example_options.c',
+				}
+
+				configuration {}
+
+				buildoptions {
+					"-fblocks",
+					"-Wno-unused-parameter",
+					"-Rpass=inline",
+				}
+
+				configuration { "Debug" }
+					defines     { "_DEBUG", }
+					flags       { "Symbols" }
+
+				configuration { "Release" }
+					defines     { "NDEBUG", }
+					flags       { "OptimizeSize" }
+
+				configuration { "windows" }
+					linkoptions { "-Wl,/subsystem:console" }
+
+				configuration { "linux*" }
+					links        { "dl", "m" }
+					buildoptions { "-stdlib=libc++" }
+					linkoptions  { "-rdynamic" }
+
+				configuration {}
+
+				debugargs {}
+
+		end, -- _create_projects()
+	},
 	["example-actions"] = {
 		_add_includedirs = function() end,
 		_add_defines = function() end,
