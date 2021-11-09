@@ -81,7 +81,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/darwin/argus-test",
-            "args": [],
+            "args": [
+                "--no-fork"
+            ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -138,7 +140,9 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\bin\\windows\\argus-test.exe",
-            "args": [],
+            "args": [
+                "--no-fork"
+            ],
             "stopAtEntry": true,
             "symbolSearchPath": "${workspaceFolder}\\bin\\windows;${workspaceFolder}\\build\\bin\\windows;${workspaceFolder}\\build\\obj\\windows",
             "cwd": "${workspaceFolder}",
