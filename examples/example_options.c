@@ -41,13 +41,25 @@ argus_ActionFunction* Help = NULL;
 
 int main(int argc, char** argv)
 {
-    if (!argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), argc - 1, argv + 1))
+    if (argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), argc - 1, argv + 1))
     {
         /// error handling here.
         /// for simplicity, emulate call with "--help" argument
-        return argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), 1, (char*[]){
+        argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), 1, (char*[]){
             "--help",
         });
     }
+
+    argus_println("passed int_value: %i", g_OptionValues.int_value);
+    argus_println("passed implicit_value: %i", g_OptionValues.implicit_value);
+    argus_println("passed float_value: %f", g_OptionValues.float_value);
+    argus_println("passed string_value: %s", g_OptionValues.string_value);
+    argus_println("passed short_option: %d", g_OptionValues.short_option);
+    argus_println("passed long_option: %d", g_OptionValues.long_option);
+    argus_println("passed argument1: %s", g_OptionValues.argument1);
+    argus_println("passed argument2: %s", g_OptionValues.argument2);
+    argus_println("passed argument3: %i", g_OptionValues.argument3);
+    argus_println("passed argument4: %f", g_OptionValues.argument4);
+
     return 0;
 }
