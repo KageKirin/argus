@@ -1,10 +1,12 @@
 #include "argus_option.h"
-#include "argus_action.h"
-#include "argus_macros.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "argus_action.h"
+#include "argus_macros.h"
 
 static int showHelp(const argus_Option* options, unsigned options_count)
 {
@@ -89,8 +91,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
         // single char arg
         else if (len == 2 && argv[0][0] == '-' && argv[0][1] != '-')
         {
-            char arg = argv[0][1];
-            unsigned i = 0;
+            char     arg = argv[0][1];
+            unsigned i   = 0;
             for (; i < options_count; ++i)
             {
                 if (options[i].shortname == arg)
@@ -110,8 +112,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
         // multi-char arg
         else if (len > 2 && argv[0][0] == '-' && argv[0][1] == '-')
         {
-            char* arg = &argv[0][2];
-            unsigned i = 0;
+            char*    arg = &argv[0][2];
+            unsigned i   = 0;
             for (; i < options_count; ++i)
             {
                 if (options[i].longname && ARGUS_STRING_EQUALS(options[i].longname, arg))
@@ -242,8 +244,8 @@ int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 int argus_setOptionPositionalArguments(void* value, int* argc, char*** argv)
 {
     argus_Arguments* args = (argus_Arguments*)value;
-    args->argc = *argc;
-    args->argv = *argv;
+    args->argc            = *argc;
+    args->argv            = *argv;
 
     *argv += *argc;
     *argc = 0;

@@ -6,11 +6,11 @@
 
 #include "argus_macros.h"
 
-char* argus_actionName = "";
+char* argus_actionName  = "";
 char* argus_programName = "";
 
-extern argus_ActionFunction *Help;
-extern argus_ActionFunction argus_Help;
+extern argus_ActionFunction* Help;
+extern argus_ActionFunction  argus_Help;
 
 int argus_parseActions(const argus_Action* actions, unsigned actions_count, int argc, char** argv)
 {

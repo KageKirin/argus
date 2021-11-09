@@ -1,8 +1,9 @@
 #include "argus_help.h"
-#include "argus_action.h"
-#include "argus_macros.h"
 
 #include <stdio.h>
+
+#include "argus_action.h"
+#include "argus_macros.h"
 
 int argus_Help(int argc, char** argv)
 {
@@ -12,7 +13,8 @@ int argus_Help(int argc, char** argv)
     argus_println(
         "\nto get information about a specific action:\n"
         "`%s help <action>` or `%s <action> --help`",
-        argus_programName, argus_programName);
+        argus_programName,
+        argus_programName);
 
     return 1;
 }

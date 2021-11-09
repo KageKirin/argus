@@ -104,8 +104,8 @@ static MunitResult test_argus_setOptionPositionalInt(const MunitParameter params
 {
     (void)fixture;
 
-    const char *value     = munit_parameters_get(params, "value");
-    const int   val       = atoi(value);
+    const char *value = munit_parameters_get(params, "value");
+    const int   val   = atoi(value);
 
     int   argc   = 1;
     char *argv[] = {
@@ -125,8 +125,8 @@ static MunitResult test_argus_setOptionPositionalFloat(const MunitParameter para
 {
     (void)fixture;
 
-    const char *value     = munit_parameters_get(params, "value");
-    const int   val       = atoi(value);
+    const char *value = munit_parameters_get(params, "value");
+    const int   val   = atoi(value);
 
     int   argc   = 1;
     char *argv[] = {
@@ -146,7 +146,7 @@ static MunitResult test_argus_setOptionPositionalString(const MunitParameter par
 {
     (void)fixture;
 
-    const char *value     = munit_parameters_get(params, "value");
+    const char *value = munit_parameters_get(params, "value");
 
     int   argc   = 1;
     char *argv[] = {

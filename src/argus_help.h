@@ -3,4 +3,4 @@
 
 int argus_Help(int, char**);
 
-#endif // ARGUS_HELP_H_INC
+#endif  // ARGUS_HELP_H_INC
