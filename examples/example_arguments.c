@@ -16,10 +16,8 @@ typedef struct OptionValues_t {
     char* string_value;
     int short_option;
     int long_option;
-    char* argument1;
-    char* argument2;
-    int argument3;
-    float argument4;
+    char* argument;
+    argus_Arguments tail;
 } OptionValues_t;
 
 static OptionValues_t g_OptionValues;
@@ -31,10 +29,8 @@ static const argus_Option g_Options[] = {
     {'s', "string", "explicitely set string value", &g_OptionValues.string_value, argus_setOptionExplicitString},
     {'x', 0, "short option only int", &g_OptionValues.short_option, argus_setOptionExplicitInt},
     {0, "longopt", "long option only int", &g_OptionValues.long_option, argus_setOptionExplicitInt},
-    {.description = "argument value 1 (string)", &g_OptionValues.argument1, argus_setOptionPositionalString},
-    {.description = "argument value 2 (string)", &g_OptionValues.argument2, argus_setOptionPositionalString},
-    {.description = "argument value 3 (int)", &g_OptionValues.argument3, argus_setOptionPositionalInt},
-    {.description = "argument value 4 (float)", &g_OptionValues.argument4, argus_setOptionPositionalFloat},
+    {.description = "argument value (string)", &g_OptionValues.argument, argus_setOptionPositionalString},
+    {.description = "argument values (remaining strings)", &g_OptionValues.tail, argus_setOptionPositionalArguments},   //< consumes remaining args, so must come last
 };
 
 argus_ActionFunction* Help = NULL;
@@ -50,16 +46,10 @@ int main(int argc, char** argv)
         });
     }
 
-    argus_println("passed int_value: %i", g_OptionValues.int_value);
-    argus_println("passed implicit_value: %i", g_OptionValues.implicit_value);
-    argus_println("passed float_value: %f", g_OptionValues.float_value);
-    argus_println("passed string_value: %s", g_OptionValues.string_value);
-    argus_println("passed short_option: %d", g_OptionValues.short_option);
-    argus_println("passed long_option: %d", g_OptionValues.long_option);
-    argus_println("passed argument1: %s", g_OptionValues.argument1);
-    argus_println("passed argument2: %s", g_OptionValues.argument2);
-    argus_println("passed argument3: %i", g_OptionValues.argument3);
-    argus_println("passed argument4: %f", g_OptionValues.argument4);
+    for (int i = 0; i < g_OptionValues.tail.argc; i++)
+    {
+        argus_println("args[%i]:\t '%s'", i, g_OptionValues.tail.argv[i]);
+    }
 
     return 0;
 }
