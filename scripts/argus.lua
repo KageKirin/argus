@@ -142,6 +142,10 @@ local external_scaffolds = {
 	--keep
 	--this
 	--line
+	['munit'] = dofile(path.join(rootpath, "libs", "munit", "munit.lua")),
+	--keep
+	--this
+	--line
 	--['stb'] = dofile(path.join(rootpath, "libs", "stb", "stb.lua")),
 	--keep
 	--this
