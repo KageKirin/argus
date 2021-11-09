@@ -205,7 +205,7 @@ core_projects = {
 		_add_self_links = function() end,
 		_create_projects = function()
 			project "argus-test"
-				targetname "argus"
+				targetname "argus-test"
 				language "C"
 				kind "ConsoleApp"
 				flags {
