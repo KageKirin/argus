@@ -231,7 +231,8 @@ core_projects = {
 				}
 
 				files {
-					'../tests/test.c',
+					'../tests/*.h',
+					'../tests/*.c',
 				}
 
 				buildoptions {
