@@ -238,3 +238,14 @@ int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
     *argv += 1;
     return 1;
 }
+
+int argus_setOptionPositionalArguments(void* value, int* argc, char*** argv)
+{
+    argus_Arguments* args = (argus_Arguments*)value;
+    args->argc = *argc;
+    args->argv = *argv;
+
+    *argv += *argc;
+    *argc = 0;
+    return 1;
+}
