@@ -19,7 +19,7 @@ ALL_TRACKED_FILES = \
 ALL_MODIFIED_FILES = \
 	$(shell git ls-files -m -- src)        \
 	$(shell git ls-files -m -- tests)      \
-	$(shell git ls-files -m -- examples")
+	$(shell git ls-files -m -- examples)
 
 
 format-all: $(ALL_SOURCE_FILES)

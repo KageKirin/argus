@@ -80,7 +80,7 @@ clean-all-artifacts:
 
 ## project generation rules
 
-projgen: clean-all-projects projgen-$(TARGET_OS)
+p projgen: clean-all-projects projgen-$(TARGET_OS)
 	@echo re-generated projects
 
 projgen-os: projgen-$(TARGET_OS)
@@ -123,7 +123,7 @@ release: release-$(TARGET_OS)
 
 build-$(TARGET_OS): loadpackages embed projgen-$(TARGET_OS) $(BROADWAY).$(PROJECT_TYPE)
 
-build: build-$(TARGET_OS)
+b build: build-$(TARGET_OS)
 
 rebuild: clean clean-artifacts build
 
