@@ -89,7 +89,7 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             break;
         }
         // single char arg
-        else if (len == 2 && argv[0][0] == '-' && argv[0][1] != '-')
+        else if (len == 2 && argv[0][0] == '-' && argv[0][1] != '-' && isalpha(argv[0][1]))
         {
             char     arg = argv[0][1];
             unsigned i   = 0;
