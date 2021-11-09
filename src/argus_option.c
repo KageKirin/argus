@@ -149,6 +149,13 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
     {
         if (argc > 0)
         {
+            // skip empty positional arguments
+            while (*argv[0] == '\0')
+            {
+                argc--;
+                argv++;
+            }
+
             if (options[i].shortname == 0 && options[i].longname == NULL && options[i].consume)
             {
                 options[i].consume(options[i].value, &argc, &argv);
