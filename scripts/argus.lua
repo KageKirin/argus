@@ -217,9 +217,9 @@ core_projects = {
 				}
 
 				build_c99()
-				-- add_packages {
-				-- 	external_scaffolds['stb'],
-				-- }
+				add_packages {
+					external_scaffolds['munit'],
+				}
 
 				links {
 					"argus",
