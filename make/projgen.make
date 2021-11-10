@@ -141,3 +141,6 @@ refresh:
 
 loadpackages:
 	$(GENIE) loadpackages
+
+test:
+	bin/$(TARGET_OS)/argus-test
