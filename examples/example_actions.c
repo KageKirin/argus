@@ -93,10 +93,12 @@ int example_Hello(int argc, char** argv)
     return 0;
 }
 
-argus_ActionFunction* Help = &example_Help;
+extern argus_ActionFunction* argus_Help_Override;
 
 int main(int argc, char** argv)
 {
+    argus_Help_Override = &example_Help;
+
     if (!argus_parseActions(g_Actions, ARGUS_ARRAY_COUNT(g_Actions), argc, argv))
     {
         return 1;

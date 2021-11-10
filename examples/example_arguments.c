@@ -36,7 +36,6 @@ static const argus_Option g_Options[] = {
      argus_setOptionPositionalArguments},  //< consumes remaining args, so must come last
 };
 
-argus_ActionFunction* Help = NULL;
 
 int main(int argc, char** argv)
 {

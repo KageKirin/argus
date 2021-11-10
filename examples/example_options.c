@@ -38,8 +38,6 @@ static const argus_Option g_Options[] = {
     {.description = "argument value 4 (float)", &g_OptionValues.argument4, argus_setOptionPositionalFloat},
 };
 
-argus_ActionFunction* Help = NULL;
-
 int main(int argc, char** argv)
 {
     if (argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), argc - 1, argv + 1))

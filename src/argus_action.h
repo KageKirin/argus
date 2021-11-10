@@ -20,6 +20,6 @@ int argus_parseActions(const argus_Action* actions, unsigned actions_count, int 
 
 extern char*                 argus_actionName;
 extern char*                 argus_programName;
-extern argus_ActionFunction* Help;
+extern argus_ActionFunction* argus_Help_Override;
 
 #endif  // ARGUS_ACTION_H_INC
