@@ -1,0 +1,107 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!win*'
+      - '!mac*'
+      - '!osx*'
+      - '!linux*'
+      - '!master'
+      - '!main'
+  pull_request:
+    branches:
+      - '*'
+      - '!win*'
+      - '!mac*'
+      - '!osx*'
+      - '!linux*'
+      - '!master'
+      - '!main'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
+          sudo apt-get update -y -qq
+          sudo apt-get install libsdl2-dev fd-find ripgrep
+          alias fd='fdfind'
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install sdl2 fd ripgrep
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          vcpkg.exe install sdl2:x64-windows
+          choco install fd ripgrep
+
+      - name: Install Clang to PATH (Windows)
+        if: runner.os == 'Windows'
+        run: echo "C:\msys64\mingw64\bin" >> $GITHUB_PATH
+      - name: Check clang is installed
+        run: clang --version
+      - name: Check where clang is installed (Windows)
+        if: runner.os == 'Windows'
+        run: where clang
+      - name: Check where clang is installed (NOT Windows)
+        if: runner.os != 'Windows'
+        run: which clang
+      - name: Check a few other assumptions (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          which clang
+          which clang++
+          clang --version
+          clang++ --version
+      - name: Check a few other assumptions (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          ls -alG /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/
+          ls -alG /Library/Developer/CommandLineTools/SDKs/
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/PrivateFrameworks
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/
+          ls -alG /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/*
+      - name: Check a few other assumptions (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          env
+          echo $env:VCPKG_ROOT
+          echo $env:VCPKG_INSTALLATION_ROOT
+          dir  $env:VCPKG_INSTALLATION_ROOT
+          dir  $env:VCPKG_INSTALLATION_ROOT\\*
+          dir  $env:VCPKG_INSTALLATION_ROOT\\packages\\*
+          dir  $env:VCPKG_INSTALLATION_ROOT\\packages\\sdl2_x64-windows\\*
+
+      - name: Install GENIE
+        run: make update-genie-os
+
+      - name: Generate projects
+        run: make projgen
+      - name: Check projects
+        run: |
+          ls build/*
+          ls *
+      - name: Build
+        run: make build
+      - name: Test
+        run: make test
