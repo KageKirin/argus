@@ -142,6 +142,10 @@ local external_scaffolds = {
 	--keep
 	--this
 	--line
+	['munit'] = dofile(path.join(rootpath, "libs", "munit", "munit.lua")),
+	--keep
+	--this
+	--line
 	--['stb'] = dofile(path.join(rootpath, "libs", "stb", "stb.lua")),
 	--keep
 	--this
@@ -201,7 +205,7 @@ core_projects = {
 		_add_self_links = function() end,
 		_create_projects = function()
 			project "argus-test"
-				targetname "argus"
+				targetname "argus-test"
 				language "C"
 				kind "ConsoleApp"
 				flags {
@@ -213,9 +217,9 @@ core_projects = {
 				}
 
 				build_c99()
-				-- add_packages {
-				-- 	external_scaffolds['stb'],
-				-- }
+				add_packages {
+					external_scaffolds['munit'],
+				}
 
 				links {
 					"argus",
@@ -227,7 +231,8 @@ core_projects = {
 				}
 
 				files {
-					'../tests/test.c',
+					'../tests/*.h',
+					'../tests/*.c',
 				}
 
 				buildoptions {
