@@ -42,8 +42,6 @@ int argus_parseActions(const argus_Action* actions, unsigned actions_count, int 
         }
 
         argus_println("No such action '%s'", argv[1]);
-        argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
-        return 1;
     }
 
     return argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
