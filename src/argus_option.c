@@ -1,10 +1,12 @@
 #include "argus_option.h"
-#include "argus_action.h"
-#include "argus_macros.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "argus_action.h"
+#include "argus_macros.h"
 
 static int showHelp(const argus_Option* options, unsigned options_count)
 {
@@ -87,10 +89,10 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             break;
         }
         // single char arg
-        else if (len == 2 && argv[0][0] == '-' && argv[0][1] != '-')
+        else if (len == 2 && argv[0][0] == '-' && argv[0][1] != '-' && isalpha(argv[0][1]))
         {
-            char arg = argv[0][1];
-            unsigned i = 0;
+            char     arg = argv[0][1];
+            unsigned i   = 0;
             for (; i < options_count; ++i)
             {
                 if (options[i].shortname == arg)
@@ -110,8 +112,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
         // multi-char arg
         else if (len > 2 && argv[0][0] == '-' && argv[0][1] == '-')
         {
-            char* arg = &argv[0][2];
-            unsigned i = 0;
+            char*    arg = &argv[0][2];
+            unsigned i   = 0;
             for (; i < options_count; ++i)
             {
                 if (options[i].longname && ARGUS_STRING_EQUALS(options[i].longname, arg))
@@ -147,6 +149,13 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
     {
         if (argc > 0)
         {
+            // skip empty positional arguments
+            while (*argv[0] == '\0')
+            {
+                argc--;
+                argv++;
+            }
+
             if (options[i].shortname == 0 && options[i].longname == NULL && options[i].consume)
             {
                 options[i].consume(options[i].value, &argc, &argv);
@@ -185,7 +194,8 @@ int argus_validateOptions(const argus_Option* options, unsigned options_count)
 
 int argus_setOptionImplicit(void* value, int* argc, char*** argv)
 {
-    *(int*)value = 1;
+    if (value)
+        *(int*)value = 1;
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -193,7 +203,8 @@ int argus_setOptionImplicit(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitInt(void* value, int* argc, char*** argv)
 {
-    *(int*)value = atoi((*argv)[1]);
+    if (value)
+        *(int*)value = atoi((*argv)[1]);
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -201,7 +212,8 @@ int argus_setOptionExplicitInt(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
 {
-    *(float*)value = atof((*argv)[1]);
+    if (value)
+        *(float*)value = atof((*argv)[1]);
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -209,7 +221,8 @@ int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 {
-    *(char**)value = (*argv)[1];
+    if (value)
+        *(char**)value = (*argv)[1];
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -217,7 +230,8 @@ int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalInt(void* value, int* argc, char*** argv)
 {
-    *(int*)value = atoi((*argv)[0]);
+    if (value)
+        *(int*)value = atoi((*argv)[0]);
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -225,7 +239,8 @@ int argus_setOptionPositionalInt(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
 {
-    *(float*)value = atof((*argv)[0]);
+    if (value)
+        *(float*)value = atof((*argv)[0]);
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -233,7 +248,8 @@ int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 {
-    *(char**)value = (*argv)[0];
+    if (value)
+        *(char**)value = (*argv)[0];
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -241,9 +257,12 @@ int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalArguments(void* value, int* argc, char*** argv)
 {
-    argus_Arguments* args = (argus_Arguments*)value;
-    args->argc = *argc;
-    args->argv = *argv;
+    if (value)
+    {
+        argus_Arguments* args = (argus_Arguments*)value;
+        args->argc            = *argc;
+        args->argv            = *argv;
+    }
 
     *argv += *argc;
     *argc = 0;

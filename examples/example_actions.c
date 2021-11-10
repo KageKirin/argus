@@ -1,12 +1,12 @@
 // Example for Argus
 
-#include "argus_action.h"
-#include "argus_option.h"
-#include "argus_macros.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "argus_action.h"
+#include "argus_macros.h"
+#include "argus_option.h"
 
 static int example_Help(int argc, char** argv);
 static int example_Hello(int argc, char** argv);
@@ -17,7 +17,6 @@ static argus_Action g_Actions[2] = {
     { "hello",              "prints hello world",    &example_Hello },
     // clang-format on
 };
-
 
 
 int example_Help(int argc, char** argv)
@@ -47,22 +46,24 @@ int example_Help(int argc, char** argv)
     argus_println(
         "\nto get information about a specific action:\n"
         "`%s help <action>` or `%s <action> --help`",
-        argus_programName, argus_programName);
+        argus_programName,
+        argus_programName);
 
     return 0;
 }
 
 
-typedef struct OptionValues_t {
-    int int_value;
-    int implicit_value;
+typedef struct OptionValues_t
+{
+    int   int_value;
+    int   implicit_value;
     float float_value;
     char* string_value;
-    int short_option;
-    int long_option;
+    int   short_option;
+    int   long_option;
     char* argument1;
     char* argument2;
-    int argument3;
+    int   argument3;
     float argument4;
 } OptionValues_t;
 
@@ -92,10 +93,12 @@ int example_Hello(int argc, char** argv)
     return 0;
 }
 
-argus_ActionFunction* Help = &example_Help;
+extern argus_ActionFunction* argus_Help_Override;
 
 int main(int argc, char** argv)
 {
+    argus_Help_Override = &example_Help;
+
     if (!argus_parseActions(g_Actions, ARGUS_ARRAY_COUNT(g_Actions), argc, argv))
     {
         return 1;

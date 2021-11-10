@@ -1,24 +1,25 @@
 // Example for Argus
 
-#include "argus_action.h"
-#include "argus_option.h"
-#include "argus_macros.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "argus_action.h"
+#include "argus_macros.h"
+#include "argus_option.h"
 
-typedef struct OptionValues_t {
-    int int_value;
-    int implicit_value;
+
+typedef struct OptionValues_t
+{
+    int   int_value;
+    int   implicit_value;
     float float_value;
     char* string_value;
-    int short_option;
-    int long_option;
+    int   short_option;
+    int   long_option;
     char* argument1;
     char* argument2;
-    int argument3;
+    int   argument3;
     float argument4;
 } OptionValues_t;
 
@@ -37,17 +38,18 @@ static const argus_Option g_Options[] = {
     {.description = "argument value 4 (float)", &g_OptionValues.argument4, argus_setOptionPositionalFloat},
 };
 
-argus_ActionFunction* Help = NULL;
-
 int main(int argc, char** argv)
 {
     if (argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), argc - 1, argv + 1))
     {
         /// error handling here.
         /// for simplicity, emulate call with "--help" argument
-        argus_parseOptions(g_Options, ARGUS_ARRAY_COUNT(g_Options), 1, (char*[]){
-            "--help",
-        });
+        argus_parseOptions(g_Options,
+                           ARGUS_ARRAY_COUNT(g_Options),
+                           1,
+                           (char*[]){
+                               "--help",
+                           });
     }
 
     argus_println("passed int_value: %i", g_OptionValues.int_value);

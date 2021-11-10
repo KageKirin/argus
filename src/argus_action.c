@@ -6,15 +6,20 @@
 
 #include "argus_macros.h"
 
-char* argus_actionName = "";
+char* argus_actionName  = "";
 char* argus_programName = "";
 
-extern argus_ActionFunction *Help;
+const argus_Action* argus_Actions      = NULL;
+unsigned            argus_ActionsCount = 0;
+
 extern argus_ActionFunction argus_Help;
+argus_ActionFunction*       argus_Help_Override = NULL;
 
 int argus_parseActions(const argus_Action* actions, unsigned actions_count, int argc, char** argv)
 {
-    argus_programName = argv[0];
+    argus_programName  = argv[0];
+    argus_Actions      = actions;
+    argus_ActionsCount = actions_count;
 
     if (argc > 1)
     {
@@ -30,9 +35,9 @@ int argus_parseActions(const argus_Action* actions, unsigned actions_count, int 
         }
 
         argus_println("No such action '%s'", argv[1]);
-        Help ? Help(argc, argv) : argus_Help(argc, argv);
+        argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
         return 1;
     }
 
-    return Help ? Help(argc, argv) : argus_Help(argc, argv);
+    return argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
 }
