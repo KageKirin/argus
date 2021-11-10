@@ -23,6 +23,13 @@ int argus_parseActions(const argus_Action* actions, unsigned actions_count, int 
 
     if (argc > 1)
     {
+        if (ARGUS_STRING_EQUALS("-h", argv[1]) ||      //
+            ARGUS_STRING_EQUALS("--help", argv[1]) ||  //
+            ARGUS_STRING_EQUALS("help", argv[1]))
+        {
+            return argus_Help_Override ? argus_Help_Override(argc - 1, argv + 1) : argus_Help(argc - 1, argv + 1);
+        }
+
         for (size_t i = 0; i < actions_count; ++i)
         {
             if (ARGUS_STRING_EQUALS(actions[i].verb, argv[1]))
