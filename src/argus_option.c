@@ -194,7 +194,8 @@ int argus_validateOptions(const argus_Option* options, unsigned options_count)
 
 int argus_setOptionImplicit(void* value, int* argc, char*** argv)
 {
-    *(int*)value = 1;
+    if (value)
+        *(int*)value = 1;
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -202,7 +203,8 @@ int argus_setOptionImplicit(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitInt(void* value, int* argc, char*** argv)
 {
-    *(int*)value = atoi((*argv)[1]);
+    if (value)
+        *(int*)value = atoi((*argv)[1]);
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -210,7 +212,8 @@ int argus_setOptionExplicitInt(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
 {
-    *(float*)value = atof((*argv)[1]);
+    if (value)
+        *(float*)value = atof((*argv)[1]);
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -218,7 +221,8 @@ int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
 
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 {
-    *(char**)value = (*argv)[1];
+    if (value)
+        *(char**)value = (*argv)[1];
     *argc -= 2;
     *argv += 2;
     return 2;
@@ -226,7 +230,8 @@ int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalInt(void* value, int* argc, char*** argv)
 {
-    *(int*)value = atoi((*argv)[0]);
+    if (value)
+        *(int*)value = atoi((*argv)[0]);
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -234,7 +239,8 @@ int argus_setOptionPositionalInt(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
 {
-    *(float*)value = atof((*argv)[0]);
+    if (value)
+        *(float*)value = atof((*argv)[0]);
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -242,7 +248,8 @@ int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 {
-    *(char**)value = (*argv)[0];
+    if (value)
+        *(char**)value = (*argv)[0];
     *argc -= 1;
     *argv += 1;
     return 1;
@@ -250,9 +257,12 @@ int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 
 int argus_setOptionPositionalArguments(void* value, int* argc, char*** argv)
 {
-    argus_Arguments* args = (argus_Arguments*)value;
-    args->argc            = *argc;
-    args->argv            = *argv;
+    if (value)
+    {
+        argus_Arguments* args = (argus_Arguments*)value;
+        args->argc            = *argc;
+        args->argv            = *argv;
+    }
 
     *argv += *argc;
     *argc = 0;
