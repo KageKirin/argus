@@ -28,6 +28,13 @@ MunitSuite g_suite = {
                 .iterations = 1,
                 .options    = MUNIT_SUITE_OPTION_NONE,
             },
+            {
+                .prefix     = "ParseOptions/",
+                .tests      = g_ParseOptionTests,
+                .suites     = NULL,
+                .iterations = 1,
+                .options    = MUNIT_SUITE_OPTION_NONE,
+            },
 
             /// end of array marker
             {NULL, NULL, NULL, 0, MUNIT_SUITE_OPTION_NONE},
