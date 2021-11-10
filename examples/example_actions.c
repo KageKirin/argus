@@ -99,9 +99,5 @@ int main(int argc, char** argv)
 {
     argus_Help_Override = &example_Help;
 
-    if (!argus_parseActions(g_Actions, ARGUS_ARRAY_COUNT(g_Actions), argc, argv))
-    {
-        return 1;
-    }
-    return 0;
+    return argus_parseActions(g_Actions, ARGUS_ARRAY_COUNT(g_Actions), argc, argv);
 }
