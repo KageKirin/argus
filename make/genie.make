@@ -7,7 +7,7 @@
 ./bin/linux:
 	mkdir -p $@
 
-
+update-genie-os: update-genie-$(TARGET_OS)
 
 update-genie-darwin: ./bin/darwin
 	curl -L -o ./bin/darwin/genie https://github.com/bkaradzic/bx/raw/master/tools/bin/darwin/genie

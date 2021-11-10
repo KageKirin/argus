@@ -20,7 +20,7 @@ return {
 		if os.isdir(munit_root) then
 			os.executef('git -C %s pull', munit_root)
 		else
-			os.executef('git clone git@github.com:nemequ/munit.git %s', munit_root)
+			os.executef('git clone https://github.com/nemequ/munit.git %s', munit_root)
 		end
 	end,
 
