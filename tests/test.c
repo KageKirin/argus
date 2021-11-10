@@ -10,10 +10,6 @@
 #include "test_parseactions.h"
 #include "test_parseoptions.h"
 
-// linker fix
-extern argus_ActionFunction argus_Help;
-argus_ActionFunction*       Help = &argus_Help;
-
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
 MunitSuite g_suite = {

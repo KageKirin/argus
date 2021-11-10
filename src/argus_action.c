@@ -17,12 +17,20 @@ argus_ActionFunction*       argus_Help_Override = NULL;
 
 int argus_parseActions(const argus_Action* actions, unsigned actions_count, int argc, char** argv)
 {
-    argus_programName  = argv[0];
-    argus_Actions      = actions;
-    argus_ActionsCount = actions_count;
+    argus_programName          = argv[0];
+    argus_Actions              = actions;
+    argus_ActionsCount         = actions_count;
+    argus_ActionFunction* Help = argus_Help_Override ? argus_Help_Override : argus_Help;
 
     if (argc > 1)
     {
+        if (ARGUS_STRING_EQUALS("-h", argv[1]) ||      //
+            ARGUS_STRING_EQUALS("--help", argv[1]) ||  //
+            ARGUS_STRING_EQUALS("help", argv[1]))
+        {
+            return Help(argc - 1, argv + 1);
+        }
+
         for (size_t i = 0; i < actions_count; ++i)
         {
             if (ARGUS_STRING_EQUALS(actions[i].verb, argv[1]))
@@ -35,9 +43,7 @@ int argus_parseActions(const argus_Action* actions, unsigned actions_count, int 
         }
 
         argus_println("No such action '%s'", argv[1]);
-        argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
-        return 1;
     }
 
-    return argus_Help_Override ? argus_Help_Override(argc, argv) : argus_Help(argc, argv);
+    return Help(argc, argv);
 }
