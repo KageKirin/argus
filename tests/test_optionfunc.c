@@ -165,6 +165,27 @@ static MunitResult test_argus_setOptionPositionalFloat(const MunitParameter para
     return MUNIT_OK;
 }
 
+static MunitResult test_argus_setOptionPositionalDouble(const MunitParameter params[], void *fixture)
+{
+    (void)fixture;
+
+    const char *value = munit_parameters_get(params, "value");
+    const double val  = strtod(value, NULL);
+
+    int   argc   = 1;
+    char *argv[] = {
+        (char *)value,
+    };
+    char **argv2  = argv;
+    double parsed = 0.0;
+
+    argus_setOptionPositionalDouble(&parsed, &argc, &argv2);
+
+    munit_assert_double(parsed, ==, val);
+
+    return MUNIT_OK;
+}
+
 static MunitResult test_argus_setOptionPositionalString(const MunitParameter params[], void *fixture)
 {
     (void)fixture;
@@ -274,6 +295,19 @@ MunitTest g_OptionFunctionTests[] = {
     {
         .name      = "/option/positional/float",
         .test      = test_argus_setOptionPositionalFloat,
+        .setup     = NULL,
+        .tear_down = NULL,
+        .options   = MUNIT_TEST_OPTION_NONE,
+        .parameters =
+            (MunitParameterEnum[]){
+                {.name = (char *)"value", .values = (char **)(const char *[]){"0.0", "1.0", "42.0", "-1.0", NULL}},
+                {NULL, NULL},
+            },
+    },
+
+    {
+        .name      = "/option/positional/double",
+        .test      = test_argus_setOptionPositionalDouble,
         .setup     = NULL,
         .tear_down = NULL,
         .options   = MUNIT_TEST_OPTION_NONE,
