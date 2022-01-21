@@ -219,6 +219,15 @@ int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
     return 2;
 }
 
+int argus_setOptionExplicitDouble(void* value, int* argc, char*** argv)
+{
+    if (value)
+        *(double*)value = strtod((*argv)[1], NULL);
+    *argc -= 2;
+    *argv += 2;
+    return 2;
+}
+
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 {
     if (value)
@@ -241,6 +250,15 @@ int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
 {
     if (value)
         *(float*)value = atof((*argv)[0]);
+    *argc -= 1;
+    *argv += 1;
+    return 1;
+}
+
+int argus_setOptionPositionalDouble(void* value, int* argc, char*** argv)
+{
+    if (value)
+        *(double*)value = strtod((*argv)[0], NULL);
     *argc -= 1;
     *argv += 1;
     return 1;
