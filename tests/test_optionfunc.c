@@ -75,6 +75,29 @@ static MunitResult test_argus_setOptionExplicitFloat(const MunitParameter params
     return MUNIT_OK;
 }
 
+static MunitResult test_argus_setOptionExplicitDouble(const MunitParameter params[], void *fixture)
+{
+    (void)fixture;
+
+    const char *param = munit_parameters_get(params, "param");
+    const char *value = munit_parameters_get(params, "value");
+    const double val  = strtod(value, NULL);
+
+    int   argc   = 2;
+    char *argv[] = {
+        (char *)param,
+        (char *)value,
+    };
+    char **argv2  = argv;
+    double parsed = 0.1f;
+
+    argus_setOptionExplicitDouble(&parsed, &argc, &argv2);
+
+    munit_assert_double(parsed, ==, val);
+
+    return MUNIT_OK;
+}
+
 static MunitResult test_argus_setOptionExplicitString(const MunitParameter params[], void *fixture)
 {
     (void)fixture;
@@ -196,6 +219,20 @@ MunitTest g_OptionFunctionTests[] = {
     {
         .name      = "/option/explicit/float",
         .test      = test_argus_setOptionExplicitFloat,
+        .setup     = NULL,
+        .tear_down = NULL,
+        .options   = MUNIT_TEST_OPTION_NONE,
+        .parameters =
+            (MunitParameterEnum[]){
+                {.name = (char *)"param", .values = (char **)(const char *[]){"-f", "--foo", NULL}},
+                {.name = (char *)"value", .values = (char **)(const char *[]){"0.0", "1.0", "42.0", "-1.0", NULL}},
+                {NULL, NULL},
+            },
+    },
+
+    {
+        .name      = "/option/explicit/double",
+        .test      = test_argus_setOptionExplicitDouble,
         .setup     = NULL,
         .tear_down = NULL,
         .options   = MUNIT_TEST_OPTION_NONE,
