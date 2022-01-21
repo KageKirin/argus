@@ -12,6 +12,7 @@ typedef int (*argus_OptionFuncPtr)(void* value, int*, char***);  // int* argc, c
 int argus_setOptionImplicit(void* value, int* argc, char*** argv);
 int argus_setOptionExplicitInt(void* value, int* argc, char*** argv);
 int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv);
+int argus_setOptionExplicitDouble(void* value, int* argc, char*** argv);
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalInt(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv);

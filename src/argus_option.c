@@ -219,6 +219,15 @@ int argus_setOptionExplicitFloat(void* value, int* argc, char*** argv)
     return 2;
 }
 
+int argus_setOptionExplicitDouble(void* value, int* argc, char*** argv)
+{
+    if (value)
+        *(double*)value = strtod((*argv)[1], NULL);
+    *argc -= 2;
+    *argv += 2;
+    return 2;
+}
+
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv)
 {
     if (value)
