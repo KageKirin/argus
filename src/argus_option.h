@@ -16,6 +16,7 @@ int argus_setOptionExplicitDouble(void* value, int* argc, char*** argv);
 int argus_setOptionExplicitString(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalInt(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv);
+int argus_setOptionPositionalDouble(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalString(void* value, int* argc, char*** argv);
 int argus_setOptionPositionalArguments(void* value, int* argc, char*** argv);
 

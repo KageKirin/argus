@@ -255,6 +255,15 @@ int argus_setOptionPositionalFloat(void* value, int* argc, char*** argv)
     return 1;
 }
 
+int argus_setOptionPositionalDouble(void* value, int* argc, char*** argv)
+{
+    if (value)
+        *(double*)value = strtod((*argv)[0], NULL);
+    *argc -= 1;
+    *argv += 1;
+    return 1;
+}
+
 int argus_setOptionPositionalString(void* value, int* argc, char*** argv)
 {
     if (value)
