@@ -149,7 +149,7 @@ static MunitResult test_argus_setOptionPositionalFloat(const MunitParameter para
     (void)fixture;
 
     const char *value = munit_parameters_get(params, "value");
-    const int   val   = atoi(value);
+    const float val   = atof(value);
 
     int   argc   = 1;
     char *argv[] = {
