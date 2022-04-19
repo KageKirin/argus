@@ -183,11 +183,20 @@ int argus_validateOptions(const argus_Option* options, unsigned options_count)
 {
     for (unsigned i = 0; i < options_count; ++i)
     {
+        assert(options[i].description != NULL);
         if (options[i].description == NULL)
         {
             argus_println("Option %d has no description", i);
         }
 
+        assert(options[i].value != NULL);
+        if (options[i].value == NULL)
+        {
+            argus_println("Option %d has no value", i);
+            return 0;
+        }
+
+        assert(options[i].consume != NULL);
         if (options[i].consume == NULL)
         {
             argus_println("Option %d has no consume function", i);
