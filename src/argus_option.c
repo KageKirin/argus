@@ -1,5 +1,6 @@
 #include "argus_option.h"
 
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,6 +98,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             {
                 if (options[i].shortname == arg)
                 {
+                    assert(options[i].consume != NULL);
+                    assert(options[i].value != NULL);
                     options[i].consume(options[i].value, &argc, &argv);
                     break;
                 }
@@ -118,6 +121,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             {
                 if (options[i].longname && ARGUS_STRING_EQUALS(options[i].longname, arg))
                 {
+                    assert(options[i].consume != NULL);
+                    assert(options[i].value != NULL);
                     options[i].consume(options[i].value, &argc, &argv);
                     break;
                 }
@@ -158,6 +163,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
 
             if (options[i].shortname == 0 && options[i].longname == NULL && options[i].consume)
             {
+                assert(options[i].consume != NULL);
+                assert(options[i].value != NULL);
                 options[i].consume(options[i].value, &argc, &argv);
             }
         }
