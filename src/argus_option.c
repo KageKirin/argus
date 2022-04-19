@@ -1,5 +1,6 @@
 #include "argus_option.h"
 
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,6 +98,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             {
                 if (options[i].shortname == arg)
                 {
+                    assert(options[i].consume != NULL);
+                    assert(options[i].value != NULL);
                     options[i].consume(options[i].value, &argc, &argv);
                     break;
                 }
@@ -118,6 +121,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
             {
                 if (options[i].longname && ARGUS_STRING_EQUALS(options[i].longname, arg))
                 {
+                    assert(options[i].consume != NULL);
+                    assert(options[i].value != NULL);
                     options[i].consume(options[i].value, &argc, &argv);
                     break;
                 }
@@ -158,6 +163,8 @@ int argus_parseOptions(const argus_Option* options, unsigned options_count, int 
 
             if (options[i].shortname == 0 && options[i].longname == NULL && options[i].consume)
             {
+                assert(options[i].consume != NULL);
+                assert(options[i].value != NULL);
                 options[i].consume(options[i].value, &argc, &argv);
             }
         }
@@ -176,11 +183,20 @@ int argus_validateOptions(const argus_Option* options, unsigned options_count)
 {
     for (unsigned i = 0; i < options_count; ++i)
     {
+        assert(options[i].description != NULL);
         if (options[i].description == NULL)
         {
             argus_println("Option %d has no description", i);
         }
 
+        assert(options[i].value != NULL);
+        if (options[i].value == NULL)
+        {
+            argus_println("Option %d has no value", i);
+            return 0;
+        }
+
+        assert(options[i].consume != NULL);
         if (options[i].consume == NULL)
         {
             argus_println("Option %d has no consume function", i);
