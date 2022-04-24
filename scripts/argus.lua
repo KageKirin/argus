@@ -161,7 +161,11 @@ create_packages_projects(external_scaffolds)
 
 core_projects = {
 	["argus"] = {
-		_add_includedirs = function() end,
+		_add_includedirs = function()
+			includedirs {
+				"../src",
+			}
+		end,
 		_add_defines = function() end,
 		_add_libdirs = function() end,
 		_add_external_links = function() end,
@@ -195,6 +199,46 @@ core_projects = {
 				}
 
 				build_c99()
+		end, -- _create_projects()
+	},
+	["arguspp"] = {
+		_add_includedirs = function()
+			includedirs {
+				"../src",
+				"../srcpp",
+			}
+		end,
+		_add_defines = function() end,
+		_add_libdirs = function() end,
+		_add_external_links = function()
+			links { "argus" }
+		end,
+		_add_self_links = function()
+			links { "arguspp" }
+		end,
+		_create_projects = function()
+			project "arguspp"
+				language "C++"
+				kind "StaticLib"
+				flags {
+					"ExtraWarnings",
+					"FatalWarnings",
+					"No64BitChecks",
+					"StaticRuntime",
+					"ObjcARC",
+					"CppLatest",
+				}
+
+				includedirs {
+					"../src",
+					"../srcpp",
+				}
+
+				files {
+					"../srcpp/arguspp.hpp",
+					"../srcpp/arguspp.cpp",
+				}
+
 		end, -- _create_projects()
 	},
 	["argus-test"] = {
