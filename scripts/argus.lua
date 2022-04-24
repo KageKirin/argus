@@ -161,7 +161,11 @@ create_packages_projects(external_scaffolds)
 
 core_projects = {
 	["argus"] = {
-		_add_includedirs = function() end,
+		_add_includedirs = function()
+			includedirs {
+				"../src",
+			}
+		end,
 		_add_defines = function() end,
 		_add_libdirs = function() end,
 		_add_external_links = function() end,
